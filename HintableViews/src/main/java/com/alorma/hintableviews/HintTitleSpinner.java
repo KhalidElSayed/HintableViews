@@ -155,6 +155,7 @@ public class HintTitleSpinner extends HintTitleRelativeLayout implements Adapter
 
         public HintableSpinner(Context context) {
             super(context);
+            isInEditMode();
         }
 
         @Override

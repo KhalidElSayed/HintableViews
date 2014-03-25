@@ -11,8 +11,9 @@ import android.widget.RelativeLayout;
 /**
  * Created by Bernat on 25/03/2014.
  */
-public class HintableButton extends HintTitleRelativeLayout {
+public class HintableButton extends HintTitleRelativeLayout implements View.OnClickListener {
     private Button button;
+    private int count = 0;
 
     public HintableButton(Context context) {
         super(context);
@@ -30,11 +31,11 @@ public class HintableButton extends HintTitleRelativeLayout {
     public void createHintedView(int textViewId, float density) {
         button = new Button(getContext());
         button.setVisibility(View.VISIBLE);
+        button.setOnClickListener(this);
 
-        LayoutParams paramsEditText = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams paramsEditText = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
         paramsEditText.addRule(RelativeLayout.ABOVE, textViewId);
-        paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -50,5 +51,19 @@ public class HintableButton extends HintTitleRelativeLayout {
     @Override
     public boolean isValid() {
         return true;
+    }
+
+    @Override
+    public void setHint(String hint) {
+        super.setHint(hint);
+        button.setHint(hint);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == button.getId()) {
+            showTitle();
+            button.setText("Count: " + (count++));
+        }
     }
 }

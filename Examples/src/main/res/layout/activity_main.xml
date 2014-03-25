@@ -23,10 +23,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" />
 
-   <com.alorma.hintableviews.HintTitleSpinner
+    <com.alorma.hintableviews.HintTitleSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Spinner 1"
         android:id="@+id/hintTitleSpinner" />
+
+    <com.alorma.hintableviews.HintableButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="This is a button" />
 
 </LinearLayout>
