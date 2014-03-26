@@ -17,11 +17,13 @@ import java.util.List;
 /**
  * Created by Bernat on 25/03/2014.
  */
-public class HintTitleSpinner extends HintTitleRelativeLayout implements AdapterView.OnItemSelectedListener {
+public class HintTitleSpinner extends HintTitleLinearLayout implements AdapterView.OnItemSelectedListener {
 
+    private static final Integer INVALID = -1;
     private Spinner spinner;
     private CustomSpinnerAdapter adapter;
     private AdapterView.OnItemSelectedListener itemSelectedListener;
+    private Integer selectedPosition = INVALID;
 
     public HintTitleSpinner(Context context) {
         super(context);
@@ -37,32 +39,34 @@ public class HintTitleSpinner extends HintTitleRelativeLayout implements Adapter
 
 
     @Override
-    public void createHintedView(int topId, float density) {
+    public Spinner createHintedView(int topId, float density) {
         spinner = new HintableSpinner(getContext());
         spinner.setVisibility(View.VISIBLE);
         spinner.setOnItemSelectedListener(this);
-
-        setItems();
-
-        LayoutParams paramsSpinner = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
-        paramsSpinner.addRule(RelativeLayout.ABOVE, topId);
-        paramsSpinner.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        paramsSpinner.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            paramsSpinner.addRule(RelativeLayout.ALIGN_PARENT_START);
-            paramsSpinner.addRule(RelativeLayout.ALIGN_PARENT_END);
-        }
-
-        paramsSpinner.setMargins(0, (int) (16 * density), 0, 0);
-
-        addView(spinner, paramsSpinner);
+        return spinner;
     }
 
     @Override
     public boolean isValid() {
         return adapter.isSelected();
+    }
+
+    @Override
+    public View getHintableView() {
+        return spinner;
+    }
+
+    @Override
+    protected Object saveState() {
+        return spinner.getSelectedItemPosition();
+    }
+
+    @Override
+    protected void restoreState(Object data) {
+        selectedPosition = (Integer) data;
+        if (selectedPosition >= INVALID) {
+            spinner.setSelection(selectedPosition);
+        }
     }
 
     public Spinner getSpinner() {
@@ -82,6 +86,10 @@ public class HintTitleSpinner extends HintTitleRelativeLayout implements Adapter
         }
 
         spinner.setAdapter(adapter);
+
+        if (selectedPosition != INVALID) {
+            spinner.setSelection(selectedPosition);
+        }
     }
 
     @Override

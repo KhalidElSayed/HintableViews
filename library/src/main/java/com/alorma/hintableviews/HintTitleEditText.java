@@ -1,23 +1,19 @@
 package com.alorma.hintableviews;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 /**
  * Created by Bernat on 25/03/2014.
  */
-public class HintTitleEditText extends HintTitleRelativeLayout implements TextWatcher {
+public class HintTitleEditText extends HintTitleLinearLayout implements TextWatcher, View.OnFocusChangeListener {
 
     private EditText editText;
     private TextWatcher textWatcher;
@@ -34,30 +30,42 @@ public class HintTitleEditText extends HintTitleRelativeLayout implements TextWa
     }
 
     @Override
-    public void createHintedView(int textViewId, float density) {
+    public EditText createHintedView(int textViewId, float density) {
         editText = new EditText(getContext());
         editText.setVisibility(View.VISIBLE);
         editText.addTextChangedListener(this);
+        editText.setOnFocusChangeListener(this);
+        return editText;
+    }
 
-        LayoutParams paramsEditText = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
-        paramsEditText.addRule(RelativeLayout.ABOVE, textViewId);
-        paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_START);
-            paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_END);
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus)  {
+            focusAnimation();
+        } else {
+            unfocusAnimation();
         }
-
-        paramsEditText.setMargins(0, (int) (16 * density), 0, 0);
-
-        addView(editText, paramsEditText);
     }
 
     @Override
     public boolean isValid() {
         return false;
+    }
+
+    @Override
+    public View getHintableView() {
+        return editText;
+    }
+
+    @Override
+    protected Object saveState() {
+        return editText.getText().toString();
+    }
+
+    @Override
+    protected void restoreState(Object data) {
+        String text = String.valueOf(data);
+        editText.setText(text);
     }
 
     @Override

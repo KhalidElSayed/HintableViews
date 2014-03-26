@@ -1,37 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="es.catmobil.tornofici.ui.activity.NuevoCasoActivity"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.alorma.hintableviews.HintTitleEditText
-        android:id="@+id/casoName"
-        android:hint="Campo de texto 1"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="es.catmobil.tornofici.ui.activity.NuevoCasoActivity"
+        android:orientation="vertical">
 
-    <com.alorma.hintableviews.HintTitleEditText
-        android:id="@+id/casoIdentifier"
-        android:hint="Campo de texto 2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" />
+        <com.alorma.hintableviews.HintTitleEditText
+            android:id="@+id/hintTitleEditText1"
+            android:hint="Campo de texto 1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
 
-    <com.alorma.hintableviews.HintTitleSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Spinner 1"
-        android:id="@+id/hintTitleSpinner" />
+        <com.alorma.hintableviews.HintTitleEditText
+            android:id="@+id/hintTitleEditText2"
+            android:hint="Campo de texto 2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
 
-    <com.alorma.hintableviews.HintableButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="This is a button" />
+        <com.alorma.hintableviews.HintTitleSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Spinner 1"
+            android:id="@+id/hintTitleSpinner"
+            android:layout_marginBottom="8dp" />
 
-</LinearLayout>
+        <com.alorma.hintableviews.HintableButton
+            android:id="@+id/hintTitleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="This is a button" />
+    </LinearLayout>
+</ScrollView>

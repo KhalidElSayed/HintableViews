@@ -5,13 +5,12 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 /**
  * Created by Bernat on 25/03/2014.
  */
-public class HintableButton extends HintTitleRelativeLayout implements View.OnClickListener {
+public class HintableButton extends HintTitleLinearLayout implements View.OnClickListener {
     private Button button;
     private int count = 0;
 
@@ -28,29 +27,36 @@ public class HintableButton extends HintTitleRelativeLayout implements View.OnCl
     }
 
     @Override
-    public void createHintedView(int textViewId, float density) {
+    public Button createHintedView(int textViewId, float density) {
         button = new Button(getContext());
         button.setVisibility(View.VISIBLE);
         button.setOnClickListener(this);
 
-        LayoutParams paramsEditText = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams paramsButtom = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        button.setLayoutParams(paramsButtom);
 
-        paramsEditText.addRule(RelativeLayout.ABOVE, textViewId);
-        paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_START);
-            paramsEditText.addRule(RelativeLayout.ALIGN_PARENT_END);
-        }
-
-        paramsEditText.setMargins(0, (int) (16 * density), 0, 0);
-
-        addView(button, paramsEditText);
+        return button;
     }
 
     @Override
     public boolean isValid() {
         return true;
+    }
+
+    @Override
+    public View getHintableView() {
+        return button;
+    }
+
+    @Override
+    protected Object saveState() {
+        return button.getText();
+    }
+
+    @Override
+    protected void restoreState(Object data) {
+        String text = String.valueOf(data);
+        button.setText(text);
     }
 
     @Override
